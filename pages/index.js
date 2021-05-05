@@ -15,29 +15,26 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home() {
+export default function Home({ allPostsData }) {
   return (
-    <Layout className={homeStyles.container} home>
-      <Head>
-        <title>{siteTitle}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout home>
+      {/* Keep the existing code here */}
 
-      <section className={utilStyles.headingMd}>
-        <h2>Curiosidades:</h2>
-        <ul>
-          <li>Prato favorito: <span>Fundo.</span></li>
-          <li>Sobremesa favorito: <span>Torta de maça</span></li>
-          <li>Anime favorito: <span>Dragon Ball Z</span></li>
-          <li>Tokusatsu favorito: <span>Jiraya</span></li>
-          <li>Game favorito: <span>Franquia Tomb Raider / Sonic</span></li>
-          <li>Time: <span>Flamengo.</span></li>
+      {/* Add this <section> tag below the existing <section> tag */}
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
         </ul>
       </section>
-
-      <footer className={homeStyles.footer}>
-        <span>Edson Carlos. Todos os direitos reservados dessa bagaça.</span>
-      </footer>
     </Layout>
   )
 }
