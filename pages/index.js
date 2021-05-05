@@ -4,6 +4,17 @@ import Layout, { siteTitle } from '../components/Layout'
 import homeStyles from '../styles/Home.module.css'
 import utilStyles from '../styles/utils.module.css'
 
+import { getSortedPostsData } from '../lib/posts'
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
+}
+
 export default function Home() {
   return (
     <Layout className={homeStyles.container} home>
