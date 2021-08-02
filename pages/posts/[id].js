@@ -1,66 +1,66 @@
+import Head from 'next/head'
 import Layout from '../../components/layout'
+import Date from '../../components/date'
+//import { getAllPostIds, getPostData } from '../../lib/posts'
 
-import { getAllPostIds, getPostData } from '../../lib/posts'
-
-export async function getStaticProps({ params }) {
-    const postData = getPostData(params.id)
-    return {
-        props: {
-            postData
-        }
-    }
-}
+import utilStyles from '../../styles/utils.module.css'
 
 export default function Post({ postData }) {
     return (
         <Layout>
-            {postData.title}
-            <br />
-            {postData.id}
-            <br />
-            {postData.date}
+            <Head>
+                <title>{postData.title}</title>
+            </Head>
+            <article>
+                <h1 className={utilStyles.headingXl}>{postData.title}</h1>
+                <div className={utilStyles.lightText}>
+                    <Date dateString={postData.date} />
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+            </article>
         </Layout>
     )
 }
 
+// export async function getStaticPaths() {
+//     const paths = getAllPostIds()
+//     return {
+//         paths,
+//         fallback: false
+//     }
+// }
 
-export async function getStaticPaths() {
-    const paths = getAllPostIds()
-    return {
-        paths,
-        fallback: false
-    }
-}
+// export async function getStaticProps({ params }) {
+//     // Add the "await" keyword like this:
+//     const postData = await getPostData(params.id)
+//     return {
+//         props: {
+//             postData,
+//         }
+//     };
+// }
 
-export function getAllPostIds() {
-    const fileNames = fs.readdirSync(postsDirectory)
+// export function getStaticProps() {
+//     const fileNames = fs.readdirSync(postsDirectory)
 
-    // Returns an array that looks like this:
-    // [
-    //   {
-    //     params: {
-    //       id: 'ssg-ssr'
-    //     }
-    //   },
-    //   {
-    //     params: {
-    //       id: 'pre-rendering'
-    //     }
-    //   }
-    // ]
-    return fileNames.map(fileName => {
-        return {
-            params: {
-                id: fileName.replace(/\.md$/, '')
-            }
-        }
-    })
-}
-
-export async function getStaticPaths() {
-    // Return a list of possible value for id
-}
-
-export async function getStaticProps({ params }) {
-    // Fetch necessary data for the blog post using params.id
-}
+//     // Returns an array that looks like this:
+//     // [
+//     //   {
+//     //     params: {
+//     //       id: 'ssg-ssr'
+//     //     }
+//     //   },
+//     //   {
+//     //     params: {
+//     //       id: 'pre-rendering'
+//     //     }
+//     //   }
+//     // ]
+//     return fileNames.map(fileName => {
+//         return {
+//             params: {
+//                 id: fileName.replace(/\.md$/, '')
+//             }
+//         }
+//     })
+// }
